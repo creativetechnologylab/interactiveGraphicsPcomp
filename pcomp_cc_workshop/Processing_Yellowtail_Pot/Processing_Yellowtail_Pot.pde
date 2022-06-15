@@ -105,6 +105,10 @@ void keyPressed() {
     }
   } else if (key == ' ') {
     clearGestures();
+  }else if (key == 'H' || key == 'h') {
+    myPort.write('H');
+  }else if (key == 'L' || key == 'l') {
+    myPort.write('L');
   }
 }
 
