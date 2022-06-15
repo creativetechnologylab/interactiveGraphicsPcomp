@@ -1,7 +1,10 @@
 import processing.serial.*;
 
 Serial myPort;  // Create object from Serial class
-int val;      // Data received from the serial port
+String val;      // Data received from the serial port
+
+int datanum = 0; //number of data receiving from Arduino
+int value1; 
 
 void setup() 
 {
@@ -13,16 +16,31 @@ void setup()
 
 void draw()
 {
-  if ( myPort.available() > 0) {  // If data is available,
-    val = myPort.read();         // read it and store it in val
-  }
   background(255);             
-  if (val == 0) {              
+  if (value1 == 0) {              
     fill(0,255,0);
       text("I got a zero", 40, 120); 
   } 
   else {                       // If the serial value is not 0,
     fill(255,0,0);
       text("No zero", 40, 120); 
+  }
+}
+
+void serialEvent( Serial myPort){
+  val = myPort.readStringUntil('\n');
+  if (val != null)
+  {
+    val = trim(val);
+    int[] vals = int(splitTokens(val, ","));
+    
+    if(vals.length >= datanum){
+       value1 = vals[0];
+    
+      //multiple data from arduino if needed
+      //value2 = vals[1] ;
+    
+      println(value1);
+    }
   }
 }
